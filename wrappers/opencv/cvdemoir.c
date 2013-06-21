@@ -1,6 +1,7 @@
 #include <opencv/cv.h>
 #include <opencv/highgui.h>
 #include <stdio.h>
+#include <inttypes.h>
 #include "libfreenect_cv.h"
 
 IplImage *GlViewColor(IplImage *depth)
@@ -54,31 +55,32 @@ IplImage *GlViewColor(IplImage *depth)
 }
 
 int main(int argc, char **argv)
-{
-	int res=0;
+{	int res=0;
 	int counter=0;
-	uint32_t timestampvideo,timestampdepth;
 	if(argc==2)res=atoi(argv[1]);
+	uint32_t timestamp1,timestamp2;
 	if(res>=-1 && res<=1);
 	else{
-		printf("Error: Resolution must be -1/0/1\n");
-		return -1;
+	printf("Error: Resolution must be -1/0/1\n");	
+	return -1;
 	}
 	while (cvWaitKey(10) < 0) {
-/*		IplImage *image = freenect_sync_get_rgb_cv(0,res,&timestampvideo);*/
-/*		cvCvtColor(image, image, CV_RGB2BGR);*/
-		IplImage *image = freenect_sync_get_ir_cv(0,res,&timestampvideo);
+		IplImage *image = freenect_sync_get_ir_cv(0,res,&timestamp1);
 		if (!image) {
 		    printf("Error: Kinect not connected?\n");
 		    return -1;
 		}
-		IplImage *depth = freenect_sync_get_depth_cv(0,&timestampdepth);
-		if (!depth) {
-		    printf("Error: Kinect not connected?\n");
-		    return -1;
-		}
-		cvShowImage("RGB/IR", image);
-		cvShowImage("Depth", GlViewColor(depth));
+		//cvCvtColor(image, image, CV_RGB2BGR);
+		//IplImage *depth = freenect_sync_get_depth_cv(0,&timestamp1);
+		//if (!depth) {
+		//    printf("Error: Kinect not connected?\n");
+		//    return -1;
+		//}
+		char a[35];
+		sprintf(a,"/media/GEN/check/%u.png",counter++);
+		
+		cvSaveImage(a, image,0);
+		//cvShowImage("Depth", GlViewColor(depth));
 	}
 	return 0;
 }

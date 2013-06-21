@@ -69,6 +69,7 @@ static pthread_cond_t pending_runloop_tasks_cond = PTHREAD_COND_INITIALIZER;
 
 static int alloc_buffer_ring_video(freenect_video_format fmt, buffer_ring_t *buf,int res)
 {
+	printf("%d\n",res);
 	int sz, i;
 	switch (fmt) {
 		case FREENECT_VIDEO_RGB:

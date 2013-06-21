@@ -24,16 +24,17 @@
  * either License.
  */
 
-#pragma once
-
+#ifndef FREENECT_SYNC_H
+#define FREENECT_SYNC_H
 #include <libfreenect.h>
 #include <stdint.h>
+#include <inttypes.h>
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
-int freenect_sync_get_video(void **video, uint32_t *timestamp, int index, freenect_video_format fmt);
+int freenect_sync_get_video(void **video, uint32_t *timestamp, int index, freenect_video_format fmt,int res);
 /*  Synchronous video function, starts the runloop if it isn't running
 
     The returned buffer is valid until this function is called again, after which the buffer must not
@@ -103,4 +104,6 @@ int freenect_sync_set_led(freenect_led_options led, int index);
 void freenect_sync_stop(void);
 #ifdef __cplusplus
 }
+#endif
+
 #endif
